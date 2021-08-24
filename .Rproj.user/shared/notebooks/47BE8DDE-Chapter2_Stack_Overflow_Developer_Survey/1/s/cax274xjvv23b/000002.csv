@@ -1,0 +1,6 @@
+"0","```r
+stack_prep <- prep(stack_recipe)
+stack_down <- bake(stack_prep, new_data = NULL)
+stack_down %>% 
+  count(remote)
+```"

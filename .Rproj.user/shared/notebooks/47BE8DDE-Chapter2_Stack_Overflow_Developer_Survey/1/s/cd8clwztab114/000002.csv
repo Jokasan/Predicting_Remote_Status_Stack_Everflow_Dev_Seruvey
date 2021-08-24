@@ -1,0 +1,14 @@
+"0","```r
+stack_overflow<- readr::read_csv(\"stack_overflow.csv\")
+
+```"
+"1","Rows: 6991 Columns: 22
+── Column specification ───────────────────────────────────────────────────────────────────────────────
+Delimiter: \",\"
+chr  (2): country, remote
+dbl  (5): respondent, salary, years_coded_job, company_size_number, career_satisfaction
+lgl (15): open_source, hobby, data_scientist, database_administrator, desktop_applications_develope...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"

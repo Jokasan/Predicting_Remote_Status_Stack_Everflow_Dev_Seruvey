@@ -1,0 +1,15 @@
+"0","```r
+# Builds a decision tree model
+forest_spec <-rand_forest() %>% 
+  set_engine(\"randomForest\") %>% 
+  set_mode(\"classification\")
+## start workflow (recipe only)
+stack_wf <- workflow() %>% 
+  add_recipe(stack_recipe)
+## add the model and fit the workflow:
+stack_forest <- stack_wf %>% 
+  add_model(forest_spec) %>% 
+  fit(stack_train)
+# print the fitted model
+stack_forest
+```"

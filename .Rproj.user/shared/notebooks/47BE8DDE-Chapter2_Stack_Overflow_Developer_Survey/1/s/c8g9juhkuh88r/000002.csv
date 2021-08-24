@@ -1,0 +1,22 @@
+"0","```r
+results <- stack_test %>% 
+  bind_cols(predict(stack_glm, stack_test) %>% 
+              rename(.pred_glm=.pred_class))
+# confusion matrix for logistic regression model
+results %>% 
+  conf_mat(truth=remote, estimate=.pred_glm)
+# confusion matrix for decision tree:
+results <- stack_test %>% 
+  bind_cols(predict(stack_tree, stack_test) %>% 
+              rename(.pred_tree=.pred_class))
+# confusion matrix for decision tree:
+results %>% 
+  conf_mat(truth=remote, estimate=.pred_tree)
+# confusion matrix for random forest:
+results <- stack_test %>% 
+  bind_cols(predict(stack_forest, stack_test) %>% 
+              rename(.pred_forest=.pred_class))
+# confusion matrix for random forest:
+results %>% 
+  conf_mat(truth=remote, estimate=.pred_forest)
+```"

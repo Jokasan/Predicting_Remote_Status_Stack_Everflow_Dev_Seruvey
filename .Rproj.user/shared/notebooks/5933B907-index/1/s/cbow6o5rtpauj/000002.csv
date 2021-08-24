@@ -1,0 +1,5 @@
+"0","ggplot(stack_overflow, aes(remote,years_coded_job))+"
+"0","  geom_boxplot()+"
+"0","  labs(x=NULL,"
+"0","       y=""Yeas of professional coding experience"")+"
+"0","  theme_light()"

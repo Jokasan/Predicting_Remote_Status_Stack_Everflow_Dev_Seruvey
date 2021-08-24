@@ -1,0 +1,9 @@
+"0","```r
+  ggtitle(\"Median Salary by Country\")
+```"
+"1","$title
+[1] \"Median Salary by Country\"
+
+attr(,\"class\")
+[1] \"labels\"
+"

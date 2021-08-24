@@ -1,0 +1,4 @@
+"0","rf_mod <- "
+"0","  rand_forest(mtry=tune(),min_n=tune(), trees=1000) %>% "
+"0","  set_engine(""ranger"") %>% "
+"0","  set_mode(""classification"")"

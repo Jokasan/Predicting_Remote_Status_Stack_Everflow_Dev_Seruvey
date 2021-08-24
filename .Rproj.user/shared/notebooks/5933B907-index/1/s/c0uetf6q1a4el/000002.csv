@@ -1,0 +1,4 @@
+"0","rf_workflow <- "
+"0","  workflow() %>% "
+"0","  add_model(rf_mod) %>% "
+"0","  add_recipe(rf_recipe)"

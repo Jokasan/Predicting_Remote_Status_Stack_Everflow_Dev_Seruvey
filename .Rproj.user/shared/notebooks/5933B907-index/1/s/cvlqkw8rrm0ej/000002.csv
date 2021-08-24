@@ -1,0 +1,4 @@
+"0","last_rf_fit %>% "
+"0","  collect_predictions() %>% "
+"0","  roc_curve(remote,.pred_Remote) %>% "
+"0","  autoplot()"

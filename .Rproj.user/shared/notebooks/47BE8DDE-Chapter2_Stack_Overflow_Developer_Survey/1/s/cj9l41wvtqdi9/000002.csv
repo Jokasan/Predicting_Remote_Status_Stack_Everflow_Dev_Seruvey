@@ -1,0 +1,10 @@
+"0","```r
+stack_recipe <- recipe(remote~., data = stack_train) %>% 
+  step_downsample(remote)
+
+```"
+"1","Warning: `step_downsample()` was deprecated in recipes 0.1.13.
+Please use `themis::step_downsample()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.
+"

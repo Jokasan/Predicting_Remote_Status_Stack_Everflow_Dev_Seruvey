@@ -1,0 +1,7 @@
+"0","```r
+ggplot(stack_overflow, aes(remote,years_coded_job))+
+  geom_boxplot()+
+  labs(x=NULL,
+       y=\"Yeas of professional coding experience\")+
+  theme_light()
+```"

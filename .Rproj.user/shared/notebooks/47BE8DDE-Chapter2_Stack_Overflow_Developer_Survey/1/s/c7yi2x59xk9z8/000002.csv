@@ -1,0 +1,19 @@
+"0","```r
+results <- stack_test %>% 
+  bind_cols(predict(stack_tree, stack_test) %>% 
+              rename(.pred_tree=.pred_class)) %>% 
+             bind_cols(predict(stack_glm, stack_test) %>% 
+              rename(.pred_glm=.pred_class)) %>% 
+             bind_cols(predict(stack_forest, stack_test) %>% 
+              rename(.pred_forest=.pred_class))
+
+## Calculate accuracy:
+accuracy(results, truth=remote, estimate=.pred_glm)
+accuracy(results, truth=remote, estimate=.pred_tree)
+accuracy(results,truth=remote,estimate=.pred_forest)
+
+## Calculate positive predict value:
+ppv(results, truth=remote, estimate=.pred_glm)
+ppv(results, truth=remote, estimate=.pred_tree)
+ppv(results,truth=remote,estimate=.pred_forest)
+```"

@@ -1,0 +1,15 @@
+"0","```r
+p1 <- stack_overflow %>% 
+  group_by(country) %>% 
+  summarise(salary=median(salary)) 
+
+p1 %>% 
+  mutate(country=fct_reorder(country,-salary)) %>% 
+  ggplot(aes(country,salary))+
+  geom_col(fill=\"midnightblue\")+
+  theme_minimal()+
+  coord_flip()+
+  xlab(\"\")+
+  ylab(\"\")+
+  scale_y_continuous(labels = scales::dollar_format())
+```"

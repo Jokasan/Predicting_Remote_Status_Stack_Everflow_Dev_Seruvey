@@ -1,0 +1,37 @@
+"0","glimpse(stack_overflow)"
+"1","Rows: 6,991"
+"1",""
+"1","
+"
+"1","Columns: 22"
+"1",""
+"1","
+"
+"1","$ respondent                           [3m[38;5;246m<dbl>[39m[23m 3, 15, 18, 19, 26, 55…
+$ country                              [3m[38;5;246m<fct>[39m[23m United Kingdom, Unite…
+$ salary                               [3m[38;5;246m<dbl>[39m[23m 113750.000, 100000.00…
+$ years_coded_job                      [3m[38;5;246m<dbl>[39m[23m 20, 20, 20, 3, 16, 4,…
+$ open_source                          [3m[38;5;246m<lgl>[39m[23m TRUE, FALSE, TRUE, FA…
+$ hobby                                [3m[38;5;246m<lgl>[39m[23m TRUE, TRUE, TRUE, TRU…
+$ company_size_number                  [3m[38;5;246m<dbl>[39m[23m 10000, 5000, 1000, 10…
+$ remote                               [3m[38;5;246m<fct>[39m[23m Not remote, Remote, R…
+$ career_satisfaction                  [3m[38;5;246m<dbl>[39m[23m 8, 8, 9, 5, 7, 9, 5, …
+$ data_scientist                       [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ database_administrator               [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ desktop_applications_developer       [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ developer_with_stats_math_background [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ dev_ops                              [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, TRUE, F…
+$ embedded_developer                   [3m[38;5;246m<lgl>[39m[23m FALSE, TRUE, TRUE, FA…
+$ graphic_designer                     [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ graphics_programming                 [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ machine_learning_specialist          [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ mobile_developer                     [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ quality_assurance_engineer           [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, TRUE, F…
+$ systems_administrator                [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, FALSE, …
+$ web_developer                        [3m[38;5;246m<lgl>[39m[23m FALSE, FALSE, TRUE, T…"
+"1",""
+"1","
+"
+"0","# First count for remote"
+"0","stack_overflow %>% "
+"0","  count(remote, sort = TRUE)"
