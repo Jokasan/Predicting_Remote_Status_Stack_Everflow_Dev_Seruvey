@@ -310,3 +310,9 @@ Based on these results, the validation set and test set performance
 statistics are very close, so we would have pretty high confidence
 that our random forest model with the selected hyperparameters
 would perform as we expect on new data.
+
+# Session Info
+```{r}
+sessionInfo()
+```
+
