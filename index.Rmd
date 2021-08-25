@@ -40,7 +40,7 @@ stack_overflow %>%
   count(country, sort = TRUE)
 ```
 
-Lets plot a boxplot of the employment type and hours of work per week. 
+Lets plot a boxplot of the employment type and years of professional coding experience. 
 ```{r}
 ggplot(stack_overflow, aes(remote,years_coded_job))+
   geom_boxplot()+
@@ -266,7 +266,7 @@ bind_rows(rf_auc, dt_auc) %>%
 ```
 
 
-# The last Fit
+# The last fit
 
 ```{r}
 last_rf_mod <- 
