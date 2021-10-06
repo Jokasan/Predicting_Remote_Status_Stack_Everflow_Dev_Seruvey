@@ -10,6 +10,9 @@ output:
     lightbox: true
 pkgdown:
   as_is: true   
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, echo=FALSE, message=FALSE}
@@ -17,20 +20,20 @@ pacman::p_load(tidymodels,readr,vip,forcats)
 stack_overflow<- read_csv("https://raw.githubusercontent.com/juliasilge/supervised-ML-case-studies-course/master/data/stack_overflow.csv")
 ```
 
-
 # Exploring and prepping the data
 
-The dataset originally from the [Stack Overflow Developer 
-Survey](https://insights.stackoverflow.com/survey/2021), was provided 
-in [chapter 2 of Julia Sigle's Supervised Machine Learning Case
-Studies in R](https://supervised-ml-course.netlify.app).  Lets explore 
-the dataset, we begin by checking how many remote and non-remote 
-developers there are and a breakdown by country.
+The dataset originally from the [Stack Overflow Developer
+Survey](https://insights.stackoverflow.com/survey/2021), was provided in
+[chapter 2 of Julia Sigle's Supervised Machine Learning Case Studies in
+R](https://supervised-ml-course.netlify.app). Lets explore the dataset,
+we begin by checking how many remote and non-remote developers there are
+and a breakdown by country.
 
 ```{r}
 # Quick look at the dataset:
 glimpse(stack_overflow)
 ```
+
 ```{r}
 # First count for remote
 stack_overflow %>% 
@@ -40,7 +43,9 @@ stack_overflow %>%
   count(country, sort = TRUE)
 ```
 
-Lets plot a boxplot of the employment type and years of professional coding experience. 
+Lets plot a boxplot of the employment type and years of professional
+coding experience.
+
 ```{r}
 ggplot(stack_overflow, aes(remote,years_coded_job))+
   geom_boxplot()+
@@ -66,10 +71,10 @@ stack_overflow %>%
 
 ## Training and testing data
 
-Before dealing with the imbalance in the remote/not remote classes,
-we first split the data into training and test datasets dividing  the 
-original data into %80/20 sections and about evenly dividing the 
-sections between different classes of remote. 
+Before dealing with the imbalance in the remote/not remote classes, we
+first split the data into training and test datasets dividing the
+original data into %80/20 sections and about evenly dividing the
+sections between different classes of remote.
 
 ```{r}
 # make character variables into factors
@@ -91,30 +96,32 @@ glimpse(stack_train)
 ## Dealing with unmbalanced data
 
 In order to address the class imbalance of our dataset, we can use
-downsampling. 
+downsampling.
+
 ```{r}
 stack_overflow %>% 
   count(remote)
 ```
 
-Downsampling removes some of the majority class so that it
-has less effect on the predictive model. It also randomly 
-removes examples from the majority class until it is equal
-to the minority class,in size. Here we will implement
-downsampling using the step_downsample() function from the
-recipes package. Downsampling is performed on the training dataset:
+Downsampling removes some of the majority class so that it has less
+effect on the predictive model. It also randomly removes examples from
+the majority class until it is equal to the minority class,in size. Here
+we will implement downsampling using the step_downsample() function from
+the recipes package. Downsampling is performed on the training dataset:
 
 ```{r}
 stack_recipe <- recipe(remote~., data = stack_train) %>% 
   step_downsample(remote)
 stack_recipe
 ```
+
 # Validation split
+
 Well use the validation_split() function to allocate 20% of the remote
-developers to the _validation set_ and the rest to the _training set_. 
-This should provide enough precision to be a reliable indicator 
-for how well each model predicts the outcome with a single 
-iteration of resampling. 
+developers to the *validation set* and the rest to the *training set*.
+This should provide enough precision to be a reliable indicator for how
+well each model predicts the outcome with a single iteration of
+resampling.
 
 ```{r}
 set.seed(234)
@@ -141,12 +148,15 @@ dt_mod
 ```
 
 Specify the the decision tree recipe:
+
 ```{r}
 dt_recipe <- 
   stack_recipe <- recipe(remote~., data = stack_train) %>% 
   step_downsample(remote) 
 ```
+
 Create the workflow:
+
 ```{r}
 dt_workflow <- 
   workflow() %>% 
@@ -155,11 +165,14 @@ dt_workflow <-
 ```
 
 ## Create the grid for tuning:
+
 ```{r}
 tree_grid <- grid_regular(cost_complexity(),tree_depth(), min_n(),levels=4)
 tree_grid
 ```
+
 Train and tune the model:
+
 ```{r}
 dt_res <- 
   dt_workflow %>% 
@@ -169,7 +182,9 @@ dt_res <-
             metrics=metric_set(roc_auc))
 dt_res
 ```
+
 Plot the ROC curve for the decision tree:
+
 ```{r}
 dt_best <- 
   dt_res %>% 
@@ -183,23 +198,27 @@ dt_auc <-
 autoplot(dt_auc)
 ```
 
-
 # A random forest model
 
 Build the model:
+
 ```{r}
 rf_mod <- 
   rand_forest(mtry=tune(),min_n=tune(), trees=1000) %>% 
   set_engine("ranger") %>% 
   set_mode("classification")
 ```
+
 Define the recipe :
+
 ```{r}
 rf_recipe <- recipe(remote~., data = stack_train) %>% 
   step_downsample(remote)
 rf_recipe
 ```
+
 Create the workflow:
+
 ```{r}
 rf_workflow <- 
   workflow() %>% 
@@ -208,11 +227,13 @@ rf_workflow <-
 ```
 
 Train and tune the model:
+
 ```{r}
 # show what will be tuned
 rf_mod %>% 
   parameters()
 ```
+
 ```{r}
 set.seed(345)
 rf_res <- 
@@ -222,7 +243,9 @@ rf_res <-
             control=control_grid(save_pred = TRUE),
             metrics=metric_set(roc_auc))
 ```
+
 Top 5 models from the 25 candidates:
+
 ```{r}
 rf_res %>% 
   show_best(metric="roc_auc")
@@ -234,18 +257,22 @@ autoplot(rf_res)
 
 Lets select the best model according to the ROC AUC metric. Our final
 values are:
+
 ```{r}
 rf_best <- 
   rf_res %>% 
   select_best(metric="roc_auc")
 rf_best
 ```
-To calculate the data needed to plot ROC curve, we use 
+
+To calculate the data needed to plot ROC curve, we use
 collect_predictions().
+
 ```{r}
 rf_res %>% 
   collect_predictions()
 ```
+
 ```{r}
 rf_auc <- 
   rf_res %>% 
@@ -253,8 +280,10 @@ rf_auc <-
                         roc_curve(remote,.pred_Remote) %>% 
   mutate(model="Rndom Forest")
 ```
-# Comparing the ROC curves for our top tuned decision
-and random forest models:
+
+# Comparing the ROC curves for our top tuned models
+
+Decision tree and random forest models:
 
 ```{r}
 bind_rows(rf_auc, dt_auc) %>% 
@@ -264,7 +293,6 @@ bind_rows(rf_auc, dt_auc) %>%
   coord_equal() + 
   scale_color_viridis_d(option = "plasma", end = .6)+theme_light()
 ```
-
 
 # The last fit
 
@@ -284,10 +312,11 @@ last_rf_fit <-
   last_fit(stack_split)
 last_rf_fit
 ```
-We can see the variable importance scores via the .workflow column. 
+
+We can see the variable importance scores via the .workflow column.
 First we need to pluck out the first element in the workflow column,
-then pull out the fit from the workflow object. Finally, the 
-vip package helps us visualise the variable importance:
+then pull out the fit from the workflow object. Finally, the vip package
+helps us visualise the variable importance:
 
 ```{r}
 last_rf_fit %>% 
@@ -299,6 +328,7 @@ last_rf_fit %>%
 ```
 
 Lets generate an ROC curve, for our final fitted random forest model:
+
 ```{r}
 last_rf_fit %>% 
   collect_predictions() %>% 
@@ -307,12 +337,12 @@ last_rf_fit %>%
 ```
 
 Based on these results, the validation set and test set performance
-statistics are very close, so we would have pretty high confidence
-that our random forest model with the selected hyperparameters
-would perform as we expect on new data.
+statistics are very close, so we would have pretty high confidence that
+our random forest model with the selected hyperparameters would perform
+as we expect on new data.
 
 # Session Info
+
 ```{r}
 sessionInfo()
 ```
-

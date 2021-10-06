@@ -1,5 +1,0 @@
-"0","rf_auc <- "
-"0","  rf_res %>% "
-"0","  collect_predictions(parameters=rf_best) %>% "
-"0","                        roc_curve(remote,.pred_Remote) %>% "
-"0","  mutate(model=""Rndom Forest"")"

@@ -1,4 +1,0 @@
-"0","dt_workflow <- "
-"0","  workflow() %>% "
-"0","  add_model(dt_mod) %>% "
-"0","  add_recipe(dt_recipe)"
